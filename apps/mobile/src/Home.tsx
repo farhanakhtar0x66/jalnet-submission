@@ -503,7 +503,7 @@ export function Home() {
                   (events.isFetching
                     ? "Refreshing citizen reports…"
                     : events.data?.length
-                      ? `${events.data.length} current citizen reports · tap a marker`
+                      ? `${events.data.length} current citizen report${events.data.length === 1 ? "" : "s"} · tap a marker`
                       : "No current reports. Conditions may still change.")}
             </AppText>
             <AppText variant="caption" tone="muted">

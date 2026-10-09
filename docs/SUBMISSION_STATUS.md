@@ -11,8 +11,12 @@ The owner reported the organizer’s explicit confirmation: **“Yes, you’re e
 | Source protection | PASS: private full-ref mirror, complete-history bundle verification and independent restore; 17 combined refs matched; original refs unchanged |
 | Complete baseline | PASS: all 188 exported source blobs/modes matched the approved `8ea3ca7` UI tree before subsequent changes |
 | Imported regression | PASS at `5c8d8e7`: **181 tests / 16 suites**, all eight original local commands; [imported-baseline CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/37940198802) also PASS |
-| Final post-import engineering | **PASS at `7be3368`, 2026-10-09 19:38 IST: all eight requested commands; 193 tests / 18 suites** (181 preserved + 7 seed + 5 actual-hook tests). [Same-revision CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/37942059301) completed SUCCESS |
-| Final post-import emulator | Scoped Light/Dark map, route/warning/credits and water checks PASS; Light and Dark cold restarts restored their appearance/tank state. Existing approved arm64 debug APK loaded new-checkout JavaScript; no new native build. Unretaken cases remain pending; see exact matrix below |
+| Historical post-import engineering | **PASS at `7be3368`, 2026-10-09 19:38 IST: all eight requested commands; 193 tests / 18 suites** (181 preserved + 7 seed + 5 actual-hook tests). [Same-revision CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/37942059301) completed SUCCESS |
+| Historical post-import emulator | Scoped Light/Dark map, route/warning/credits and water checks PASS; Light and Dark cold restarts restored their appearance/tank state. Existing approved arm64 debug APK loaded new-checkout JavaScript; no new native build. Unretaken cases remain pending; see exact matrix below |
+| Final-sprint reproduced baseline | PASS at **57a4da6**, 2026-10-09: **193 tests / 18 suites** and all eight requested local commands reproduced before changes; sprint branch `codex/submission-finalization` |
+| Final-sprint regression / CI | **Local gate PASS at reviewed source `c2a8148`, 21:18 IST: 212 tests /23 suites**, 193 baseline retained +19 new regression cases. [Same-source CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/37954567115) SUCCESS; final delivery checks in [the engineering report](FINAL_ENGINEERING_REPORT.md) |
+| Final-sprint Android build / install | PASS: arm64 development APK built from the submission checkout in **1m27s / 368 Gradle tasks**, then installed with `-r` on the owned emulator, preserving app data. It requires Metro; current-sprint native evidence and remaining limits are recorded in [the engineering report](FINAL_ENGINEERING_REPORT.md) |
+| Sanitized Cedar judge proof | PASS: isolated actual HTTP with the genuine engine proved **4/4 owner allow**, **4/4 foreign deny**, **4/4 in-memory test-only forbid deny**, with zero new denied effects. `pnpm cedar:demo` executed PASS; production policy unchanged |
 | Latest Redmi acceptance | PENDING: charged phone/owner participation; older core-camera success is historical only |
 | Rehearsals and video | R1–R5 all NOT RUN / NOT MEASURED; final video NOT RECORDED, no video URL |
 | Final form/publication | Deadline/form/judge-access review and actual submission PENDING |
@@ -43,11 +47,32 @@ The imported gate actually ran `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pn
 | `e707eb3` | Deliberate pin required for route origin/save; same-point destination blocked; labels and disabled/handler guards explain the next action |
 | `7be3368` | Exact requested command aliases and CI checks for real Cedar plus isolated local smoke |
 
-All 181 imported tests remain; the 12 added tests produce **193 tests / 18 suites**. Byte comparison found 33 protected Cedar/backend/AWS-security files unchanged. Real Cedar 4.13.0 on Node 24.21.0/darwin-arm64 performed 1,000 decisions: 500 allow / 500 deny; initialization 32.242209 ms, median 0.292542 ms, p95 0.437583 ms. These are local-host measurements.
+At the historical `7be3368` gate, all 181 imported tests remained; the 12 additions produced **193 tests / 18 suites**. That gate’s byte comparison found 33 protected Cedar/backend/AWS-security files unchanged. Real Cedar 4.13.0 on Node 24.21.0/darwin-arm64 performed 1,000 decisions: 500 allow / 500 deny; initialization 32.242209 ms, median 0.292542 ms, p95 0.437583 ms. These are local-host measurements.
 
-## Scoped final emulator evidence
+## Final-sprint proof and bounded reliability work
 
-The existing approved arm64 development APK used the **new checkout’s Metro8083 and isolated mandatory-Cedar API8847** with synthetic data only. No native rebuild, phone operation, private draft reset or cloud request is claimed. [14 inspected unedited synthetic screenshots](ui/submission/README.md).
+The 2026-10-09 sprint started from the reproduced **57a4da6 / 193-test** baseline. Local upload capabilities now claim a nonce synchronously before filesystem work, so two concurrent redemptions cannot both consume it. An unsuccessful write may restore the same still-valid grant for retry. Three new real-HTTP tests use isolated temporary evidence and mandatory Cedar for concurrent redemption, a real filesystem failure/retry and expiry; the focused upload/Cedar/core run passed **63 tests / 4 suites**. Production Cedar policies, schema, authorizer and the AWS provider/security architecture are unchanged. The complete reviewed-source gate passed **212 tests /23 suites**; all193 baseline tests remain. The additional real CLI test prevents failed resume startup from changing retained private state.
+
+Run the prepared judge proof with the pinned runtime:
+
+```sh
+pnpm cedar:demo
+```
+
+It creates only synthetic 8×8 JPEGs, ephemeral loopback listeners and an owned temporary repository, then closes/removes its own resources. The actual engine allows the owner through all four HTTP operations and denies a different authenticated identity. A trusted, explicitly **TEST-ONLY** in-memory forbid denies all four owner operations, including accepted replay. State/evidence snapshots remain unchanged and observed grant/read/mutation/analysis calls stay zero for denied operations. Terminal output omits report IDs, file paths, capabilities, credentials and tokens. The checked-in production permit is untouched. The `pnpm cedar:demo` alias is integrated and executed; this script does not alter the interactive demo’s data or contact AWS. Use its five readable result lines for the script’s 20–30-second judge explanation, not an artificially delayed run.
+
+Two larger limitations were actually reproduced with isolated synthetic HTTP inputs and retained as explicit limitations rather than changing the architecture:
+
+| Reproduced condition | Actual result / acceptance limit |
+|---|---|
+| Distinct old/new upload grants reuse one evidence key; newer JPEG completes, then older grant uploads late | Older PUT returned **204**; confirmation returned **409 REPORT_BAD_STATE** because the persisted SHA-256 no longer matched. **Zero incidents and zero droplets** were created. The protection blocks publication/award, but the owner must capture a fresh draft. The nonce fix above does not claim distinct-grant versioning or AWS/S3 immutability. |
+| Two identities confirm first reports concurrently, with a barrier delaying real candidate-read results | Both HTTP requests returned **200**; two separate **UNVERIFIED** incidents were created with provisional **2/2** droplets. No independent-photo/corroboration bonus was awarded. Sequential fusion remains covered; cross-report spatial serialization is not implemented or claimed. |
+
+Neither reproduction used private phone data or live AWS. The reviewed-source gate passed212 tests /23 suites; current native/core observations and final delivery checks are in [the engineering report](FINAL_ENGINEERING_REPORT.md). See the [final submission package](FINAL_SUBMISSION_PACKAGE.md), [2:43 final script](FINAL_DEMO_SCRIPT.md) and [owner action queue](OWNER_FINAL_ACTIONS.md); the owner-action file contains the practical20-step handoff.
+
+## Historical scoped post-import emulator evidence
+
+Before this final sprint, the existing approved arm64 development APK used the **new checkout’s Metro8083 and isolated mandatory-Cedar API8847** with synthetic data only. No native rebuild, phone operation, private draft reset or cloud request is claimed. [14 inspected unedited synthetic screenshots](ui/submission/README.md).
 
 | Native check | Actual result |
 |---|---|
@@ -61,7 +86,7 @@ The existing approved arm64 development APK used the **new checkout’s Metro808
 | Emulator crash buffer | Read completed successfully with no entries after this inspection; this is not a general stability certification |
 | Explicitly unretaken | Camera/full permissions, offline recovery, screen reader and remaining physical/native matrix; prior source evidence is not a fresh pass |
 
-This revision is **engineering validated**, not the final physical-acceptance freeze.
+The historical `7be3368` revision is **engineering validated**, not the final physical-acceptance freeze. The final sprint has a separately successful new native build/install, with the reviewed source `c2a8148` passing the complete 212-test/23-suite gate and same-source CI. Current emulator observations are recorded separately in [final engineering evidence](FINAL_ENGINEERING_REPORT.md); physical acceptance remains pending.
 
 ## Owner’s next physical action
 
@@ -75,7 +100,7 @@ This revision is **engineering validated**, not the final physical-acceptance fr
 
 ## Rehearsal and final take
 
-Use the existing [five-run checklist](FIVE_REHEARSALS.md) and [planned 2:50 shot list](BUILD_IT_DEVICE_DEMO.md). Each run needs disposable demo data, a safe staged scene, synthetic pin, preserved wanted drafts and actual timing. A server reset never resets phone SQLite. Do not reset server references while a wanted draft depends on them; isolated smoke is a separate regression check, not the interactive take’s state.
+Use the existing [five-run checklist](FIVE_REHEARSALS.md) with the new [planned 2:43 final script](FINAL_DEMO_SCRIPT.md), which supersedes the older 2:50 presentation timing in the historical device handoff. This is planned timing, not a measured rehearsal. Each run needs disposable demo data, a safe staged scene, synthetic pin, preserved wanted drafts and actual timing. A server reset never resets phone SQLite. Do not reset server references while a wanted draft depends on them; isolated smoke is a separate regression check, not the interactive take’s state.
 
 - [ ] R1, R2, R3, R4 and R5: record five complete successful runs, their exact revisions and measured durations; currently all five are pending.
 - [ ] Show the actual report/warning/+2 result and My Water arithmetic, not a previous fixture substituted for the current capture. Say LOCAL/DEMO; manual/no-model assessment and straight-line routing remain disclosed.
@@ -87,3 +112,5 @@ Use the existing [five-run checklist](FIVE_REHEARSALS.md) and [planned 2:50 shot
 ## Separate future Ship It gate
 
 SSO is not required for this local Build It submission. Live AWS stays **BLOCKED_AWAITING_SSO**, intended profile `jalnet`, region `ap-south-1`. First eventual command: `aws sts get-caller-identity --profile jalnet`; compare account/role privately and stop immediately on mismatch before following the [guarded runbook](AWS_DEPLOYMENT_RUNBOOK.md). Keep the working local demo available if cloud deployment fails. No cloud integration or P0 completion is declared.
+
+Final local freeze gate also passed all eight requested commands after the one-line Home copy correction: **212 tests/23 suites**,2026-10-09 21:57 IST. [Full final evidence](FINAL_ENGINEERING_REPORT.md); final delivery SHA/CI is provided in the review PR and handoff. Physical rehearsals/video/form and live AWS remain separate unperformed gates.
