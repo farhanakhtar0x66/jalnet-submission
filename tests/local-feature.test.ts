@@ -118,6 +118,40 @@ async function fixture() {
 }
 
 describe("local feature hook reset recovery (React lifecycle and storage port simulated)", () => {
+  it.each(["resolve", "reject"] as const)(
+    "a queued edit during reset cannot leave loading stuck after %s",
+    async (outcome) => {
+      const { initial, resetValue, store, render } = await fixture();
+      const pending = deferred<{ value: typeof initial; scope: string }>();
+      store.reset.mockReturnValueOnce(pending.promise);
+      const reset = render().reset();
+      render().update(simulateTankDay(initial));
+      expect(render()).toMatchObject({
+        loading: true,
+        saveStatus: "saving",
+        data: initial,
+      });
+      expect(store.save).not.toHaveBeenCalled();
+      if (outcome === "resolve")
+        pending.resolve({ value: resetValue, scope: "alice" });
+      else pending.reject(new Error("private-reset-diagnostic"));
+      expect(await reset).toEqual(outcome === "resolve" ? resetValue : null);
+      const recovered = render();
+      expect(recovered).toMatchObject({
+        loading: false,
+        saveStatus: outcome === "resolve" ? "saved" : "error",
+        data: outcome === "resolve" ? resetValue : initial,
+      });
+      expect(recovered.saveError).not.toContain("private-reset-diagnostic");
+      expect(store.save).not.toHaveBeenCalled();
+      const next = simulateTankDay(recovered.data ?? initial);
+      recovered.update(next);
+      await vi.waitFor(() => expect(render().saveStatus).toBe("saved"));
+      expect(render().data).toEqual(next);
+      expect(store.save).toHaveBeenCalledExactlyOnceWith(next, "alice");
+    },
+  );
+
   it("shows pending then error on failed reset, retains tank data and redacts dependency details", async () => {
     const { initial, store, render } = await fixture();
     const pending = deferred<{ value: typeof initial; scope: string }>();

@@ -23,6 +23,7 @@ export function useLocalFeature<T>(store: Store<T>) {
   const scope = useRef("");
   const mounted = useRef(false);
   const revision = useRef(0);
+  const resetInFlight = useRef(false);
   const load = useCallback(async () => {
     setLoading(true);
     setLoadError("");
@@ -47,6 +48,9 @@ export function useLocalFeature<T>(store: Store<T>) {
     };
   }, [load]);
   const update = (value: T) => {
+    // A native input callback can already be queued when the reset hides the
+    // form. Keep that callback from superseding the confirmed reset.
+    if (resetInFlight.current) return;
     const next = ++revision.current;
     setData(value);
     setSaveStatus("saving");
@@ -66,6 +70,7 @@ export function useLocalFeature<T>(store: Store<T>) {
   };
   const reset = async () => {
     const next = ++revision.current;
+    resetInFlight.current = true;
     setLoading(true);
     setSaveStatus("saving");
     setSaveError("");
@@ -85,7 +90,10 @@ export function useLocalFeature<T>(store: Store<T>) {
       }
       return null;
     } finally {
-      if (mounted.current && next === revision.current) setLoading(false);
+      if (next === revision.current) {
+        resetInFlight.current = false;
+        if (mounted.current) setLoading(false);
+      }
     }
   };
   return {
