@@ -171,3 +171,10 @@ This table retains historical accepted scope and the current pending queue. Earl
 | Five timed UI rehearsals / final video | Pending; no final recording. |
 
 Update this record only from executed evidence with the tested commit, time and redacted device details. AWS and Cedar-in-Lambda gates remain separate.
+
+
+## Current submission gate — 2026-10-09
+
+The owner received organizer eligibility approval (“Yes, you’re eligible!”). Submission repository: [jalnet-submission](https://github.com/farhanakhtar0x66/jalnet-submission). Original commits/APK/device evidence above retain their historical meaning. Final engineering `7be3368` passed the exact eight requested commands at 19:38 IST with **193 tests / 18 suites** (181 preserved + 7 seed + 5 actual-hook tests with a SIMULATED React lifecycle and storage port), and same-revision CI completed SUCCESS. Current scoped Light/Dark native inspection used the existing approved arm64 development APK/new-checkout JS; no new native build or fresh camera/permission/offline/screen-reader pass is claimed. [Current evidence and screenshots](SUBMISSION_STATUS.md).
+
+This is **engineering validated**, not the final physical-acceptance/recording freeze. Latest redesigned Redmi acceptance, all five timed physical rehearsals and final video remain pending. Next owner action: **charge the Redmi, connect USB, unlock it, enable USB debugging and approve this computer**, then report readiness. Continue one physical test at a time; never clear storage/uninstall/discard wanted drafts. Keep the USB-local development setup functional. Live AWS remains **BLOCKED_AWAITING_SSO** and P0 remains incomplete.

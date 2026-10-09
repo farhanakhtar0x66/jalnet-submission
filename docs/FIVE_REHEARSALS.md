@@ -43,4 +43,8 @@ Record timings locally in Asia/Kolkata. A duration is entered only after measure
 | R4 | PENDING | PENDING | PENDING | PENDING | PENDING | PENDING | NOT MEASURED | NOT RUN |
 | R5 | PENDING | PENDING | PENDING | PENDING | PENDING | PENDING | NOT MEASURED | NOT RUN |
 
-Use five successful runs, completed physical review and team submission review to establish readiness for the final take; official eligibility remains a separate team review. Live AWS stays separately BLOCKED_AWAITING_SSO.
+## Current submission gate — 2026-10-09
+
+Organizer eligibility approval was received by the owner (“Yes, you’re eligible!”); no additional eligibility approval is awaited. Final engineering `7be3368` passed all eight requested commands at 19:38 IST, **193 tests / 18 suites**, with same-revision CI SUCCESS. The imported 181-test baseline and earlier APK evidence above remain history; this increment used that approved APK with new-checkout JavaScript and scoped Light/Dark checks, without a native rebuild. See [current evidence](SUBMISSION_STATUS.md).
+
+All five rows remain **NOT RUN / NOT MEASURED**, latest redesigned Redmi acceptance is pending and the final video is **NOT RECORDED**. Use five successful measured runs and completed physical/form review to establish readiness for the final take. Next owner action: charge/unlock the Redmi, connect USB debugging and approve this computer; proceed one test at a time. Preserve drafts/USB-local state. Live AWS stays separately **BLOCKED_AWAITING_SSO**; P0 is not complete.
