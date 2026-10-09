@@ -1,0 +1,60 @@
+{
+  "name": "jalnet",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": ">=24.21.0 <25"
+  },
+  "scripts": {
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "typecheck": "tsc --noEmit && pnpm --filter @jalnet/mobile typecheck",
+    "test": "vitest run",
+    "synth": "cdk synth --app 'node --import tsx infrastructure/cdk/app.ts' --quiet",
+    "deploy": "node --import tsx scripts/aws-cutover.ts --action deploy",
+    "aws:cutover": "node --import tsx scripts/aws-cutover.ts",
+    "aws:mobile-config": "node --import tsx scripts/configure-mobile-aws.ts",
+    "smoke:aws": "node --import tsx scripts/smoke-aws.ts",
+    "mobile:start": "pnpm --filter @jalnet/mobile start",
+    "mobile:start:local": "EXPO_PUBLIC_PROVIDER_MODE=local-demo EXPO_PUBLIC_API_BASE_URL=http://10.0.2.2:8787 pnpm mobile:start --localhost --clear --port 8081",
+    "mobile:start:usb": "EXPO_PUBLIC_PROVIDER_MODE=local-demo EXPO_PUBLIC_API_BASE_URL=http://127.0.0.1:8787 pnpm mobile:start --localhost --clear --port 8081",
+    "mobile:android": "pnpm --filter @jalnet/mobile android",
+    "mobile:bundle": "pnpm --filter @jalnet/mobile bundle:android",
+    "local:server": "node --import tsx scripts/dev-server.ts",
+    "local:server:usb": "node --import tsx scripts/dev-server.ts --android-usb",
+    "cedar:check": "node --import tsx scripts/check-cedar.ts",
+    "demo:seed": "node --import tsx scripts/seed-demo.ts --local",
+    "demo:reset": "node --import tsx scripts/reset-demo.ts --local",
+    "smoke:local": "node --import tsx scripts/smoke-local.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/aws-lambda": "8.10.164",
+    "@types/geojson": "7946.0.16",
+    "@types/node": "24.19.1",
+    "aws-cdk": "2.1144.0",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vitest": "5.0.3"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "3.1147.0",
+    "@aws-sdk/client-dynamodb": "3.1147.0",
+    "@aws-sdk/client-geo-routes": "3.1147.0",
+    "@aws-sdk/client-s3": "3.1147.0",
+    "@aws-sdk/client-sqs": "3.1147.0",
+    "@aws-sdk/client-sts": "3.1147.0",
+    "@aws-sdk/lib-dynamodb": "3.1147.0",
+    "@aws-sdk/s3-request-presigner": "3.1147.0",
+    "@cedar-policy/cedar-wasm": "4.13.0",
+    "aws-cdk-lib": "2.272.0",
+    "constructs": "10.8.1",
+    "h3-js": "4.5.0",
+    "jpeg-js": "0.4.4",
+    "zod": "4.6.5"
+  },
+  "type": "module"
+}
