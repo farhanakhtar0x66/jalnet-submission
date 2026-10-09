@@ -44,7 +44,9 @@ import { Button } from "./Button";
 import { cachedApi } from "./cache";
 import { WaterHub } from "./features/WaterHub";
 import { foregroundFix } from "./location";
+import { operationGate } from "./operation";
 import { ReportFlow } from "./ReportFlow";
+import { renderableSavedRouteSchema, routeErrorMessage } from "./routeGeometry";
 import { SignIn } from "./SignIn";
 import { demoCenter, type Layer as LayerName, useUI } from "./ui";
 
@@ -71,7 +73,7 @@ const publicSchema = eventSchema.extend({
   freshness: z.enum(["RECENT", "AGING", "EXPIRED"]),
 });
 const riskSchema = z.object({
-  route: savedRouteSchema,
+  route: renderableSavedRouteSchema,
   risks: z.array(
     z.object({
       eventId: z.uuid(),
@@ -116,6 +118,7 @@ export function Home() {
   const [routeName, setRouteName] = useState("");
   const [origin, setOrigin] = useState<typeof pin | null>(null);
   const [busy, setBusy] = useState(false);
+  const actionGate = useRef(operationGate());
   const sameRoutePoint =
     origin !== null && origin.lat === pin.lat && origin.lon === pin.lon;
   const destinationReady = initialized && !sameRoutePoint;
@@ -147,7 +150,7 @@ export function Home() {
   };
   const routeResult = useQuery({
     queryKey: ["routes"],
-    queryFn: () => cachedApi("/v1/routes", z.array(savedRouteSchema)),
+    queryFn: () => cachedApi("/v1/routes", z.array(renderableSavedRouteSchema)),
   });
   const routes = { ...routeResult, data: routeResult.data?.value };
   const risk = useQuery({
@@ -179,19 +182,20 @@ export function Home() {
     },
     [],
   );
-  const act = async (action: () => Promise<void>) => {
-    setBusy(true);
-    try {
-      await action();
-    } catch (error) {
-      Alert.alert(
-        "Unable to complete",
-        error instanceof Error ? error.message : "Try again",
-      );
-    } finally {
-      setBusy(false);
-    }
-  };
+  const act = (action: () => Promise<void>) =>
+    actionGate.current.run(async () => {
+      setBusy(true);
+      try {
+        await action();
+      } catch (error) {
+        Alert.alert(
+          "Unable to complete",
+          error instanceof Error ? error.message : "Try again",
+        );
+      } finally {
+        setBusy(false);
+      }
+    });
   const recenter = () =>
     Alert.alert(
       "Use foreground location?",
@@ -235,7 +239,8 @@ export function Home() {
     risk.isError ||
     risk.isFetching ||
     riskOutdated ||
-    events.isError
+    events.isError ||
+    routes.isError
       ? []
       : (risk.data ?? [])
   ).flatMap((r) => r.risks.map((w) => ({ ...w, name: r.route.name })));
@@ -269,7 +274,7 @@ export function Home() {
     })),
   };
   const closeSheet = () => {
-    if (busy || reportBusy.current) return;
+    if (busy || actionGate.current.busy || reportBusy.current) return;
     setSheet(null);
     useUI.getState().select(null);
   };
@@ -835,7 +840,7 @@ export function Home() {
                       {routes.error ? (
                         <StateMessage
                           title="Routes unavailable"
-                          body={routes.error.message}
+                          body={routeErrorMessage(routes.error)}
                           tone="danger"
                         />
                       ) : null}
@@ -872,7 +877,8 @@ export function Home() {
                           eventResult.data?.fromCache ||
                           risk.error ||
                           riskOutdated ||
-                          events.isError
+                          events.isError ||
+                          routes.isError
                         );
                         const checking = risk.isPending || risk.isFetching;
                         const routeWarnings =
