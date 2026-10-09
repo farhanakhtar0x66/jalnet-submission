@@ -65,11 +65,13 @@ export function useLocalFeature<T>(store: Store<T>) {
     );
   };
   const reset = async () => {
-    ++revision.current;
+    const next = ++revision.current;
     setLoading(true);
+    setSaveStatus("saving");
+    setSaveError("");
     try {
       const saved = await store.reset();
-      if (!mounted.current) return null;
+      if (!mounted.current || next !== revision.current) return null;
       scope.current = saved.scope;
       setData(saved.value);
       setSaveStatus("saved");
@@ -77,10 +79,13 @@ export function useLocalFeature<T>(store: Store<T>) {
       setLoadError("");
       return saved.value;
     } catch (error) {
-      if (mounted.current) setSaveError(message(error));
+      if (mounted.current && next === revision.current) {
+        setSaveError(message(error));
+        setSaveStatus("error");
+      }
       return null;
     } finally {
-      if (mounted.current) setLoading(false);
+      if (mounted.current && next === revision.current) setLoading(false);
     }
   };
   return {
