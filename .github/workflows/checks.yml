@@ -22,4 +22,6 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm synth
       - run: pnpm test
-      - run: pnpm mobile:bundle
+      - run: pnpm mobile
+      - run: pnpm cedar
+      - run: pnpm smoke --isolated

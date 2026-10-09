@@ -27,7 +27,10 @@
     "cedar:check": "node --import tsx scripts/check-cedar.ts",
     "demo:seed": "node --import tsx scripts/seed-demo.ts --local",
     "demo:reset": "node --import tsx scripts/reset-demo.ts --local",
-    "smoke:local": "node --import tsx scripts/smoke-local.ts"
+    "smoke:local": "node --import tsx scripts/smoke-local.ts",
+    "mobile": "pnpm mobile:bundle",
+    "cedar": "pnpm cedar:check",
+    "smoke": "pnpm smoke:local"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
