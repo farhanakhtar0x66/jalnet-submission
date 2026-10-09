@@ -6,6 +6,7 @@ import {
   LocalRoutes,
 } from "../services/providers/local.js";
 import { LocalRepository } from "../services/providers/local-repository.js";
+import { ensureLocalDemoCorridor } from "./demo-seed-fixture.js";
 import { requireStoppedDemoServer } from "./local-safety.js";
 
 if (process.argv[2] !== "--local")
@@ -19,14 +20,7 @@ const app = new Application(
   new LocalAnalysis(),
   new LocalRoutes(),
 );
-if ((await repo.routes("local-alice")).length === 0)
-  await app.saveRoute("local-alice", {
-    name: "LOCAL/DEMO corridor",
-    origin: { lat: 28.6139, lon: 77.205 },
-    destination: { lat: 28.6139, lon: 77.215 },
-    travelMode: "Car",
-    activeAlerts: true,
-  });
+const result = await ensureLocalDemoCorridor(app);
 process.stdout.write(
-  "Seeded LOCAL/DEMO straight-line corridor; no fabricated observations or AWS writes.\n",
+  `${result === "created" ? "Seeded" : "Already present:"} LOCAL/DEMO straight-line corridor; no fabricated observations or AWS writes.\n`,
 );
