@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "JalNet",
+    "slug": "jalnet",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.jalnet.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "org.jalnet.mobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@maplibre/maplibre-react-native",
+      "expo-secure-store",
+      "expo-sqlite",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Capture a water-related observation for your private report.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Locate your report or recenter the map. You can choose a pin instead."
+        }
+      ],
+      "expo-web-browser",
+      "./plugins/withDevMenuPresentation.cjs",
+      "expo-system-ui",
+      [
+        "expo-navigation-bar",
+        {
+          "enforceContrast": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F5F8FA",
+          "dark": {
+            "backgroundColor": "#101922"
+          },
+          "image": "./assets/icon.png",
+          "imageWidth": 80
+        }
+      ]
+    ],
+    "scheme": "jalnet",
+    "backgroundColor": "#F5F8FA"
+  }
+}
