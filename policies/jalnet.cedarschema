@@ -1,0 +1,6 @@
+namespace JalNet {
+  entity User;
+  entity Report { owner: User };
+  action "ReadReport", "PresignReport", "CompleteUpload", "ConfirmReport"
+    appliesTo { principal: User, resource: Report, context: {} };
+}
