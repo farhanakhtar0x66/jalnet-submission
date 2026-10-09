@@ -116,6 +116,15 @@ export function Home() {
   const [routeName, setRouteName] = useState("");
   const [origin, setOrigin] = useState<typeof pin | null>(null);
   const [busy, setBusy] = useState(false);
+  const sameRoutePoint =
+    origin !== null && origin.lat === pin.lat && origin.lon === pin.lon;
+  const destinationReady = initialized && !sameRoutePoint;
+  const canSaveRoute =
+    origin !== null &&
+    destinationReady &&
+    routeName.trim().length > 0 &&
+    routeName.trim().length <= 80 &&
+    !busy;
   const eventResult = useQuery({
     queryKey: ["events", bbox, layer],
     queryFn: () =>
@@ -744,9 +753,22 @@ export function Home() {
                           <StatusPill
                             label={origin ? "Origin chosen" : "Origin needed"}
                           />
-                          <StatusPill label="Destination: current pin" />
+                          <StatusPill
+                            label={
+                              destinationReady
+                                ? "Destination: current pin"
+                                : "Destination needed"
+                            }
+                          />
                         </View>
-                        {origin ? (
+                        {!initialized || sameRoutePoint ? (
+                          <AppText variant="caption" tone="muted">
+                            {sameRoutePoint
+                              ? "Choose another map pin for the destination. Origin and destination must be different."
+                              : "Tap the map or use foreground location to choose a pin before setting your origin."}
+                          </AppText>
+                        ) : null}
+                        {origin && destinationReady ? (
                           <AppText variant="caption" tone="muted">
                             Origin {origin.lat.toFixed(4)},{" "}
                             {origin.lon.toFixed(4)} · destination{" "}
@@ -761,15 +783,20 @@ export function Home() {
                           }
                           icon="locate"
                           variant="secondary"
-                          onPress={() => setOrigin(pin)}
+                          disabled={busy || !initialized}
+                          onPress={() => {
+                            if (!initialized || busy) return;
+                            setOrigin(pin);
+                          }}
                         />
                         <Button
                           title={
                             busy ? "Saving route…" : "Save route to current pin"
                           }
                           icon="plus"
-                          disabled={busy || !origin || !routeName.trim()}
+                          disabled={!canSaveRoute}
                           onPress={() => {
+                            if (!canSaveRoute) return;
                             void act(async () => {
                               await api(
                                 "/v1/routes",
@@ -792,7 +819,13 @@ export function Home() {
                           }}
                         />
                         <Button
-                          title="Choose destination on map"
+                          title={
+                            !origin
+                              ? "Choose origin on map"
+                              : sameRoutePoint
+                                ? "Choose another destination on map"
+                                : "Choose destination on map"
+                          }
                           icon="map"
                           variant="ghost"
                           disabled={busy}
