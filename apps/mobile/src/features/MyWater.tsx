@@ -1,4 +1,4 @@
-import type { TankField } from "@jalnet/contracts/water";
+import type { TankField, TankState } from "@jalnet/contracts/water";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
 import {
@@ -20,8 +20,7 @@ import {
 } from "../design";
 import { Icon } from "../Icon";
 import { useTheme } from "../theme/ThemeProvider";
-import { tankStore } from "./storage";
-import { useLocalFeature } from "./useLocalFeature";
+import { type LocalFeatureStore, useLocalFeature } from "./useLocalFeature";
 
 const fields: {
   key: TankField;
@@ -48,11 +47,11 @@ const fields: {
     suffix: "L/day",
   },
 ];
-export function MyWater() {
+export function MyWater({ store }: { store: LocalFeatureStore<TankState> }) {
   const { colors } = useTheme();
   const { width, fontScale } = useWindowDimensions();
   const stackHero = width < 360 || fontScale > 1.25;
-  const state = useLocalFeature(tankStore);
+  const state = useLocalFeature(store);
   const sources = state.data
     ? {
         capacityLitres: state.data.capacitySource,

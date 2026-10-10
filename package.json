@@ -30,7 +30,10 @@
     "smoke:local": "node --import tsx scripts/smoke-local.ts",
     "mobile": "pnpm mobile:bundle",
     "cedar": "pnpm cedar:check",
-    "smoke": "pnpm smoke:local"
+    "smoke": "pnpm smoke:local",
+    "cedar:demo": "node --import tsx scripts/cedar-demo.ts",
+    "demo:serve": "node --import tsx scripts/serve-demo.ts",
+    "android:preview": "node --import tsx scripts/build-android-preview.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
