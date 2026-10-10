@@ -6,17 +6,19 @@ The owner reported the organizer’s explicit confirmation: **“Yes, you’re e
 
 ## Android preview release — separate gate
 
-The owner authorized a standalone friend-testing prerelease. **Option B** preserves the working local Node/Cedar application and future AWS design while introducing a separate **org.jalnet.preview**, planned **v0.1.0-preview.1 / versionCode 2 / arm64-v8a**. Its target is on-device tank/theme persistence, demo Stress and public map assets; camera/GPS/report/API/routes/warnings/ledger/sign-in are unavailable in this first preview. Cedar stays on the Node server, not the phone.
+The owner authorized a standalone friend-testing prerelease. **Option B** preserves the working local Node/Cedar application and future AWS design while introducing a separate **org.jalnet.preview**, published **v0.1.0-preview.1 / versionCode 2 / arm64-v8a**. Its target is on-device tank/theme persistence, demo Stress and public map assets; camera/GPS/report/API/routes/warnings/ledger/sign-in are unavailable in this first preview. Cedar stays on the Node server, not the phone.
 
 | Preview gate | Current evidence |
 |---|---|
 | Prior engineering baseline | **c0f229a: 212 tests / 23 suites**; existing local/native history retained |
-| Preview capability guards / regression | IN PROGRESS; new tests/results not inferred |
+| Preview capability guards / regression | PASS at **952bfde: 229 tests / 25 suites**, all 212 previous tests retained + 17 preview regressions; [push CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032876398) and [PR CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032902452) SUCCESS. Bounded native and physical acceptance are separate evidence |
 | Secure signing custody | Owner approved private keystore/Keychain custody; no secret published |
-| Release build / metadata / certificate / checksum | PENDING exact artifact inspection |
-| Exact signed APK without Metro/forwarding | PENDING ARM64 native execution; development APK is separate evidence |
+| Release build / metadata / certificate / checksum | PASS: inspected signed ARM64 APK, 44,981,242 bytes, SDK 24/36, bundled Hermes, debuggability/backup/cleartext off, verified v2/v3 signatures; [exact SHA/certificate/source record](ANDROID_RELEASE.md) |
+| Exact signed APK without Metro/forwarding | PASS: 28 bounded ARM64 emulator cases, actual icon/splash/cold starts, appearance/persistence, tank/Stress and offline device tools; [actual cases/limits](ANDROID_PREVIEW_ACCEPTANCE.md), [nine release captures](ui/android-preview-v0.1.0/README.md). No observed crash/ANR in 30 minutes; untested physical/accessibility/fault cases remain separate |
 | Friend / Redmi acceptance | PENDING actual physical testing and feedback |
-| GitHub prerelease / downloaded checksum | NOT VERIFIED; no release/download URL added yet |
+| GitHub prerelease / downloaded checksum | PASS: [v0.1.0-preview.1](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1), isDraft=false/isPrerelease=true, exactly two APK/checksum assets. Anonymous 44,981,242-byte APK downloaded at 2026-10-10T07:40:20Z was byte-for-byte identical to the tested artifact; full SHA-256 and checksum asset matched |
+
+Tag `v0.1.0-preview.1` is verified at artifact source 952bfde; later evidence documentation does not rebuild or alter the APK. Main remains 57a4da6 and PR #2 is unmerged pending final-documentation CI/owner review. Public prerelease/download verification PASS; physical/hackathon/cloud acceptance remains separate.
 
 [Release record](ANDROID_RELEASE.md) · [Testing guide](ANDROID_TESTING.md) · [Release notes](../RELEASE_NOTES.md). Preview release success will not promote the live AWS, physical demo or hackathon submission gates. The engineering branch must not be merged without owner approval.
 

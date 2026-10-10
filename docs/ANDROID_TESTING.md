@@ -1,12 +1,12 @@
 # Android preview testing
 
-Updated 2026-10-10. **Distribution gate: PENDING. No verified release/download exists yet.** This guide describes the intended `v0.1.0-preview.1` standalone trial; release metadata and exact artifact acceptance will be added after verification.
+Updated 2026-10-10. **[Public prerelease](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1) and anonymous download verification PASS.** The standalone `v0.1.0-preview.1` APK from source 952bfde is built, signed and inspected; 28 bounded ARM64 emulator cases PASS. Physical acceptance remains pending. [Actual runtime cases and limits](ANDROID_PREVIEW_ACCEPTANCE.md). [Artifact record](ANDROID_RELEASE.md).
 
 ## What this preview is
 
 A separate **JalNet Preview**, package `org.jalnet.preview`, with bundled JavaScript and no Metro, laptop, USB debugging, ADB forwarding or Node server required by testers.
 
-It is ARM64-only: the Android runtime must support `arm64-v8a`. A 64-bit processor running a 32-bit Android installation is insufficient. The intended minimum is Android 7 / API 24, pending inspection of the final APK; graphics/device compatibility still needs real feedback. x86/x86_64-only emulators cannot establish ARM64 acceptance.
+It is ARM64-only: the Android runtime must support `arm64-v8a`. A 64-bit processor running a 32-bit Android installation is insufficient. The inspected minimum is Android 7 / API 24, with target API 36; graphics/device compatibility still needs real feedback. x86/x86_64-only emulators cannot establish ARM64 acceptance.
 
 | Works on-device | Needs internet | Unavailable in this preview |
 |---|---|---|
@@ -14,15 +14,15 @@ It is ARM64-only: the Android runtime must support `arm64-v8a`. A 64-bit process
 
 Cedar remains real authorization in the **local Node application**; it does not execute in this phone preview. No AWS cloud service is verified. Calculators are entered/demo assumptions; TankerOS has no booking/payment/contact and HeatSafe is PLANNED.
 
-## Install once the verified release is published
+## Install the verified preview
 
-1. Use the owner's actual prerelease linked from the README or [GitHub Releases](https://github.com/farhanakhtar0x66/jalnet-submission/releases). Do not install an unrelated debug APK or random mirror.
-2. Download the ARM64 APK and published checksum. The intended filename is `JalNet-v0.1.0-preview.1-arm64-v8a.apk`; use the actual release assets.
+1. Open the verified [v0.1.0-preview.1 prerelease](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1). Use its official assets.
+2. Download the [signed ARM64 APK](https://github.com/farhanakhtar0x66/jalnet-submission/releases/download/v0.1.0-preview.1/JalNet-v0.1.0-preview.1-arm64-v8a.apk) and [published SHA-256 checksum](https://github.com/farhanakhtar0x66/jalnet-submission/releases/download/v0.1.0-preview.1/JalNet-v0.1.0-preview.1-arm64-v8a.apk.sha256). Filename: `JalNet-v0.1.0-preview.1-arm64-v8a.apk`.
 3. Verify its SHA-256 against the release's checksum before installation. On macOS:
    ```sh
    shasum -a 256 JalNet-v0.1.0-preview.1-arm64-v8a.apk
    ```
-   On Linux use `sha256sum`; on Windows use `Get-FileHash -Algorithm SHA256`. The full digest must match, not just its prefix.
+   On Linux use `sha256sum`; on Windows use `Get-FileHash -Algorithm SHA256`. The full digest must match, not just its prefix. The published APK is 44,981,242 bytes with SHA-256 `5cc463b5b25803c3b3e23352d3dee5313dcf5ae4a987267364704f2367cba9da`. An anonymous download matched the tested APK byte-for-byte at 2026-10-10T07:40:20Z; compare your own full download before installation.
 4. Open the APK. Android may ask you to allow installs from that browser/file manager and may warn that it is outside an app store. Review the source/permissions and approve only the verified asset. Keep platform protections enabled; stop on a blocked/signature error rather than bypassing it.
 5. Launch **JalNet Preview** from its launcher icon. There must be no development-server screen.
 
@@ -32,7 +32,7 @@ The preview installs beside the development app `org.jalnet.mobile`. It starts w
 
 Later preview updates require the same preview package and retained signing certificate, with a higher versionCode. Install a verified compatible update in place to retain preview data; stop on a signature mismatch. Uninstalling/clearing preview storage loses its tank/preferences. Do not uninstall the development app to solve a preview installation problem. No automatic migration/backup guarantee is claimed.
 
-Tank values and appearance are stored on-device; Stress edits are screen-local. Maps contact external public asset providers, so offline tiles are not guaranteed. Do not enter sensitive information into feedback; no automatic analytics or crash-data collection is introduced.
+Tank values and appearance are stored on-device; Stress edits are screen-local. The actual offline emulator cold start and calculators/theme passed; visible cached tiles do not establish new-area offline rendering or uncached failure/Retry. Maps contact external public asset providers, so offline tiles are not guaranteed. Do not enter sensitive information into feedback; no automatic analytics or crash-data collection is introduced.
 
 ## Ten checks for friends
 

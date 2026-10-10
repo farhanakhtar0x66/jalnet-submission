@@ -2,31 +2,33 @@
 
 **Water observations, route warnings and private evidence protected by Cedar.**
 
-JalNet connects a citizen's water report to a human-confirmed incident, freshness-aware saved-route warnings and an idempotent contribution ledger. The working reporting system runs with a **local Node API** and genuine AWS-origin **Cedar 4.13.0**. A separate Android preview is being prepared for friends who do not have that backend.
+JalNet connects a citizen's water report to a human-confirmed incident, freshness-aware saved-route warnings and an idempotent contribution ledger. The working reporting system runs with a **local Node API** and genuine AWS-origin **Cedar 4.13.0**. A separately signed Android preview has passed bounded emulator acceptance for friends who do not have that backend.
 
 ## Android preview
 
-**Release preparation: IN PROGRESS. No verified download is published yet.** The intended prerelease is **v0.1.0-preview.1**, ARM64 only, package **org.jalnet.preview**. [Installation and feedback](docs/ANDROID_TESTING.md) · [Build and verification](docs/ANDROID_RELEASE.md) · [Release notes](RELEASE_NOTES.md)
+**[Download signed ARM64 APK](https://github.com/farhanakhtar0x66/jalnet-submission/releases/download/v0.1.0-preview.1/JalNet-v0.1.0-preview.1-arm64-v8a.apk)** · **[SHA-256 checksum](https://github.com/farhanakhtar0x66/jalnet-submission/releases/download/v0.1.0-preview.1/JalNet-v0.1.0-preview.1-arm64-v8a.apk.sha256)** · [Public prerelease](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1)
+
+**v0.1.0-preview.1**, 44,981,242 bytes, package **org.jalnet.preview**, Android 7 / API 24 or newer with an ARM64 runtime. Bundled JavaScript runs without Metro, USB forwarding or a laptop. The public APK was anonymously downloaded and verified byte-for-byte against the tested artifact on 2026-10-10. [Installation and feedback](docs/ANDROID_TESTING.md) · [Build and verification](docs/ANDROID_RELEASE.md) · [Release notes](RELEASE_NOTES.md)
 
 | Capability | Standalone preview | Local development application |
 |---|---|---|
 | Street map and attribution | Public assets require internet | Same network dependency |
-| Light / Dark / System | On-device; persistence must pass the exact release gate | Executed native evidence retained |
+| Light / Dark / System | Actual selection, persistence and OS-following emulator checks PASS | Executed native evidence retained |
 | My Water | On-device calculator, persistence and one-day simulation | Same calculated inputs; no meter |
 | Water Stress | Computed DEMO INDICATOR from six fictional factors | Same demo arithmetic; no official feed |
 | Camera, location, reports, routes, warnings and ledger | **Unavailable in this first preview** | Working in the documented local scope; requires Node/Metro |
 | Cedar authorization | **Runs on the server, not in the preview phone** | Mandatory for private-report operations |
 | TankerOS / HeatSafe | Fictional display-only preview / PLANNED | No booking, payments, contact or heat-aware routing |
 
-The preview installs separately from `org.jalnet.mobile`; it does not migrate or overwrite that app's private drafts. Exact artifact metadata and release tests remain pending. It is not a completely offline app.
+The preview installs separately from `org.jalnet.mobile`; it does not migrate or overwrite that app's private drafts. The APK is signed and inspected; 28 bounded emulator cases PASS. Public prerelease/download verification PASS; physical-device acceptance remains pending. It is not a completely offline app.
 
 ## Real Android UI
 
-These are inspected **local-development emulator captures**, not proof of the forthcoming preview APK. [Complete evidence](docs/ui/final-acceptance/README.md)
+These are inspected, unedited captures of the **exact signed standalone APK**, source 952bfde, on an ARM64 emulator with Metro/API processes suspended and ADB forwarding absent. [Nine-image gallery](docs/ui/android-preview-v0.1.0/README.md) · [28-case native report](docs/ANDROID_PREVIEW_ACCEPTANCE.md). Earlier [local-development evidence](docs/ui/final-acceptance/README.md) remains historical.
 
 | My Water | Water Stress |
 |---|---|
-| ![Dark My Water calculates the demo tank fixture](docs/ui/final-acceptance/final-water-default-dark.png) | ![Light Water Stress displays its computed demo indicator](docs/ui/final-acceptance/final-stress-default-light.png) |
+| ![Dark My Water calculates the demo tank fixture](docs/ui/android-preview-v0.1.0/preview-release-water-one-day-dark.png) | ![Light Water Stress displays its computed demo indicator](docs/ui/android-preview-v0.1.0/preview-release-stress-default-light.png) |
 
 My Water's 1,500 L / 60% / 300 L per day fixture computes **900 L / 72h**, then **600 L / 40% / 48h** after one simulated day. Stress exposes weights, missing-data coverage and its 60% minimum coverage. These are assumptions and fictional pressures, not sensors, environmental measurements or safety guarantees.
 
@@ -108,7 +110,7 @@ On macOS, configure JAVA_HOME for JDK 17 and ANDROID_HOME for the compatible And
 pnpm android:preview
 ```
 
-The wrapper uses an isolated build workspace; it does not convert the development app in place. Signing custody and [exact artifact gates](docs/ANDROID_RELEASE.md) are required. **Build/runtime verification and publication are still pending.**
+The wrapper actually built and signed an isolated ARM64 release APK from **952bfde**: **44,981,242 bytes**, min/target SDK **24/36**, bundled Hermes, debuggability/backup/cleartext disabled. It preserves the development app. The full [artifact record and SHA-256](docs/ANDROID_RELEASE.md) are available; **28 bounded native cases and public prerelease/download verification PASS**. No crash/ANR was observed in the 30-minute audit. Redmi, TalkBack, performance, low-memory/native-storage faults and uncached-map failure/Retry remain untested; cached offline tiles do not prove offline map support.
 
 ## Tests and contribution
 
@@ -124,7 +126,7 @@ pnpm smoke --isolated
 pnpm cedar:demo
 ```
 
-The prior engineering baseline at **c0f229a** retains **212 tests / 23 suites**. [Executed evidence](docs/FINAL_ENGINEERING_REPORT.md) distinguishes the local gate, real Cedar HTTP proof, native debug build and pending physical acceptance. Preview-specific regression, signing and exact release-APK runtime checks are still pending.
+The release source **952bfde** passes **229 tests / 25 suites**, preserving all **212 tests / 23 suites** from c0f229a plus 17 preview tests. [Same-source CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032876398) and [PR CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032902452) completed SUCCESS. [Earlier local evidence](docs/FINAL_ENGINEERING_REPORT.md) remains historical; the scoped 28-case release runtime/publication results and pending physical acceptance remain distinct. All three Mermaid diagrams were actually inspected rendering on GitHub on 2026-10-10.
 
 [Roadmap](TODO.md) · [Contributing](CONTRIBUTING.md) · [Feature status](docs/FEATURE_STATUS.md) · [Privacy](docs/PRIVACY.md) · [Submission materials](docs/FINAL_SUBMISSION_PACKAGE.md)
 

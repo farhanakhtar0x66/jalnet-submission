@@ -1,17 +1,17 @@
 # JalNet feature status
 
-Updated 2026-10-10. Prior verified engineering source **c0f229a: 212 tests / 23 suites**. Existing [local/native evidence](FINAL_ENGINEERING_REPORT.md) and [migration provenance](../MIGRATION.md) remain historical records; no result is inferred for the new release artifact.
+Updated 2026-10-10. Preview source **952bfde passes 229 tests / 25 suites**, preserving the prior **c0f229a: 212 tests / 23 suites**. [Same-source CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032876398) and [PR CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032902452) completed SUCCESS. Existing [local/native evidence](FINAL_ENGINEERING_REPORT.md) and [migration provenance](../MIGRATION.md) remain historical; new artifact/runtime/publication gates are recorded separately.
 
 ## Standalone preview versus working local application
 
-**Option B is selected: separate Android preview, org.jalnet.preview, v0.1.0-preview.1/versionCode 2, ARM64-only.** Implementation, release signing, exact-APK runtime and publication are **PENDING acceptance**. [Release gate](ANDROID_RELEASE.md), [friend testing](ANDROID_TESTING.md).
+**Option B is selected: separate Android preview, org.jalnet.preview, v0.1.0-preview.1/versionCode 2, ARM64-only.** Composition/configuration regressions and the signed artifact inspection **PASS**. The exact signed APK passes 28 bounded native emulator cases; [public prerelease](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1) and anonymous downloaded-checksum verification **PASS**. Physical acceptance remains **PENDING**. [Actual cases/untested limits](ANDROID_PREVIEW_ACCEPTANCE.md), [nine release captures](ui/android-preview-v0.1.0/README.md). [Release gate](ANDROID_RELEASE.md), [friend testing](ANDROID_TESTING.md).
 
 | Feature | On-device preview target | Existing local Node/development evidence |
 |---|---|---|
-| Public street map / credits | Enabled; internet required; exact-release test pending | Scoped Light/Dark MapLibre assets/attribution actually inspected |
-| Appearance | System/Light/Dark and SQLite preference; release persistence pending | Actual native selection/cold restarts retained |
-| My Water | Validated calculator, simulation, tank-only reset and isolated SQLite; release gate pending | Actual arithmetic/native reset/edit/restart tests; assumptions, no sensors |
-| Water Stress | Executable fictional six-factor DEMO INDICATOR; release gate pending | Actual weights/coverage/missing/invalid/native cases retained; no environmental feed |
+| Public street map / credits | Exact-APK Light/Dark streets, pan retention and native credits PASS; internet required; uncached offline/Retry untested | Scoped Light/Dark MapLibre assets/attribution actually inspected |
+| Appearance | Actual Light/Dark persistence/cold restart and System following OS Dark/Light PASS | Actual native selection/cold restarts retained |
+| My Water | Exact-APK valid/invalid/zero-use/save/restart/reset/simulation/offline PASS; blank field/rapid taps/native storage fault untested | Actual arithmetic/native reset/edit/restart tests; assumptions, no sensors |
+| Water Stress | Exact-APK default/invalid/missing 55% / exact 60%/renormalized weights/offline cases PASS; fictional DEMO INDICATOR | Actual weights/coverage/missing/invalid/native cases retained; no environmental feed |
 | TankerOS / HeatSafe | Display-only fictional DEMO / PLANNED | No booking, payments, supplier contact, heat measurement or heat-aware routing |
 | Camera / foreground location | Unavailable in this first standalone preview | Earlier scoped physical staged camera and broader emulator recovery evidence; physical permission/GPS matrix incomplete |
 | Private report / confirmation / incidents | Unavailable without the backend; no fake response | Actual local HTTP/manual confirmation/UNVERIFIED incident/fusion/freshness |
@@ -19,7 +19,7 @@ Updated 2026-10-10. Prior verified engineering source **c0f229a: 212 tests / 23 
 | Cedar | Not running in the preview phone | Mandatory genuine Node/WASM decisions for private-report operations; real owner/foreign/forbid/fail-closed HTTP proof |
 | AWS cloud / Cedar Lambda | Unavailable/live unverified | Providers, resources and guards preserved; BLOCKED_AWAITING_SSO |
 
-The separate package preserves the development app's private data without automatic migration. No secure public connected trial exists; the fixed-identity loopback API must not be exposed. Preview calculators/theme are on-device; map requests still go to public external asset providers. Do not call this wholly offline or production-ready.
+Artifact tag/source stays 952bfde; later evidence-document commits may differ. Main 57a4da6 remains unchanged; PR #2 is unmerged pending final-doc CI/owner review. The separate package preserves the development app's private data without automatic migration. No secure public connected trial exists; the fixed-identity loopback API must not be exposed. Preview calculators/theme are on-device; map requests still go to public external asset providers. Do not call this wholly offline or production-ready.
 
 Organizer eligibility approval is already recorded from the owner's message; no new clarification is awaited. Five measured physical rehearsals, final hackathon video and form receipt remain separate pending tasks. No live AWS or JalNet P0 completion is declared.
 

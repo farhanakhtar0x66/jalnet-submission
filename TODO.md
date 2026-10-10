@@ -1,24 +1,25 @@
 # JalNet roadmap
 
-Updated 2026-10-10. This is a current backlog, not a replacement for [historical engineering evidence](docs/FINAL_ENGINEERING_REPORT.md), [migration provenance](MIGRATION.md) or the [original specification](JalNet_Implementation_Plan.md). Prior verified baseline: **212 tests / 23 suites**. The standalone preview and local Node application have separate acceptance gates.
+Updated 2026-10-10. This is a current backlog, not a replacement for [historical engineering evidence](docs/FINAL_ENGINEERING_REPORT.md), [migration provenance](MIGRATION.md) or the [original specification](JalNet_Implementation_Plan.md). Current verified source: **952bfde, 229 tests / 25 suites**, preserving the **212-test / 23-suite** prior baseline. The standalone preview and local Node application have separate acceptance gates.
 
 Each open item states priority/status, dependencies where applicable and its completion criterion.
 
 ## P0 — Standalone release blockers
 
-- [ ] **P0 · IN PROGRESS:** Build a bundled, signed ARM64 preview under `org.jalnet.preview` with explicit version/versionCode. Depends on preview composition and durable private signing custody. Done when inspected release metadata/certificate/ABI/Hermes match the declared artifact, with debuggability off and no Metro launcher.
-- [ ] **P0 · IN PROGRESS:** Enforce preview capabilities without localhost/API calls. Done when enabled map/calculator/theme actions work and camera/location/report/routes/warning/ledger controls clearly state unavailable, without fabricated success or phone-Cedar claims.
-- [ ] **P0 · PENDING:** Test the exact signed APK with no Metro or port forwarding. Depends on the release artifact. Done when install/icon launch/cold restart, appearance, tank persistence, Stress, navigation and documented online/offline map behavior pass on ARM64.
-- [ ] **P0 · PENDING:** Run all existing gates plus meaningful preview tests and same-source CI. Done when the 212-test baseline remains passing, actual new totals are recorded and the tested source matches the artifact.
-- [ ] **P0 · PENDING:** Publish a verified GitHub prerelease with APK/checksum/notes after the gates pass. Depends on approved source/publication requirements. Done when the downloaded asset matches the inspected local SHA-256 and the README links the real release.
+- [x] **P0 · BUILD/INSPECTION PASS:** Build and privately sign the separate ARM64 `org.jalnet.preview` APK. Source 952bfde produced version 0.1.0-preview.1/code 2, 44,981,242 bytes, SDK 24/36, bundled Hermes and verified v2/v3 signatures; debuggability/backup/cleartext are off. Bounded native acceptance and public distribution are separate. [Exact artifact record](docs/ANDROID_RELEASE.md).
+- [x] **P0 · BOUNDED NATIVE PASS:** Execute exact-APK capability acceptance: 28 bounded emulator cases cover maps/credits, capabilities, appearance, tank, Stress and fictional/planned cards, without a Node API or phone-Cedar claim. [Actual cases and untested limits](docs/ANDROID_PREVIEW_ACCEPTANCE.md); no blanket every-action or physical-device certification.
+- [x] **P0 · BOUNDED NATIVE PASS:** Install/icon-launch/cold-restart the signed ARM64 artifact without Metro/API or ADB forwarding; test saved tank/appearance, System OS-following, 150% text and offline device tools. All 28 observed cases PASS; cached offline map tiles do not establish uncached-map support.
+- [x] **P0 · REGRESSION/CI PASS:** Source 952bfde retains all 212 baseline tests and adds 17 preview composition/storage/configuration/notice tests: **229 tests / 25 suites**. [Same-source CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032876398) and [PR CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032902452) completed SUCCESS. Native artifact acceptance and publication are separate gates.
+- [x] **P0 · PREVIEW PUBLICATION PASS:** Publish [v0.1.0-preview.1](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1) with exactly two APK/checksum assets. Anonymous downloaded APK and checksum were actually verified at 2026-10-10T07:40:20Z; the 44,981,242-byte APK is byte-for-byte identical to the tested artifact. Tag resolves 952bfde. This closes only the scoped preview release checklist, not physical/hackathon/cloud P0.
 
 ## P1 — Bugs and reliability
 
-- [ ] **P1 · PENDING PHYSICAL:** Test the preview on Redmi and friends' compatible devices. Depends on verified distributable APK. Done when actual model/OS/install/theme/map/calculator/persistence results and failures are recorded; emulator evidence is not substituted.
+- [ ] **P1 · PENDING PHYSICAL:** Test the preview on Redmi and friends' compatible devices. The verified prerelease is available. Done when actual model/OS/install/theme/map/calculator/persistence results and failures are recorded; emulator evidence is not substituted.
 - [ ] **P1 · PENDING PHYSICAL:** Complete local-development camera deny/recover, foreground location, interrupted upload, keyboard, enlarged text and TalkBack cases. Done when each remaining [physical case](docs/PHYSICAL_ACCEPTANCE.md) has actual evidence and failures are fixed/retested.
 - [ ] **P1 · CONFIRMED LIMIT:** Prevent an older distinct upload grant overwriting a completed newer JPEG. Current SHA-256 check blocks publication/awards but requires retake. Done when an actual HTTP regression proves version isolation and denied effects, preserving ownership/Cedar boundaries.
 - [ ] **P1 · CONFIRMED LIMIT:** Handle concurrent first-report fusion without duplicate nearby incidents. Done when overlapping real-repository confirmations satisfy the intended fusion invariant without granting false corroboration bonuses.
 - [ ] **P1 · PENDING:** Measure startup/map/calculator responsiveness on target hardware and test rotation/font/keyboard edge layouts. Done when budgets and actual measurements are documented, with no untested performance claims.
+- [ ] **P1 · PENDING:** Induce an uncached-map failure and exercise Retry. Depends on controlled networking/new viewport without deleting wanted data. Done when actual failure/disclosure/retry behavior is recorded; cached offline tiles are insufficient.
 - [ ] **P1 · PENDING:** Evaluate native persistence-failure recovery. Existing actual-hook tests use simulated storage ports. Done when a controlled native failure preserves prior tank/draft data and retries recover.
 
 ## P2 — Product improvements

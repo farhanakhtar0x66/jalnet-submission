@@ -21,7 +21,7 @@ pnpm cedar
 pnpm smoke --isolated
 ```
 
-Synthesis precedes infrastructure tests. For authorization proof use `pnpm cedar:demo`. Preview changes additionally need the exact signed release artifact checks in [ANDROID_RELEASE.md](docs/ANDROID_RELEASE.md); an Android export or debug APK is not release acceptance.
+Synthesis precedes infrastructure tests. For authorization proof use `pnpm cedar:demo`. Preview changes additionally need the exact signed release artifact checks in [ANDROID_RELEASE.md](docs/ANDROID_RELEASE.md); an Android export or debug APK is not release acceptance. Release source 952bfde has 229 passing tests across 25 suites and successful [same-source CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032876398); the [28-case exact-APK emulator audit](docs/ANDROID_PREVIEW_ACCEPTANCE.md), verified [prerelease/download](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1) and pending physical tests remain separate. Artifact tag/source is 952bfde; later documentation-evidence commits may differ. Main 57a4da6 is unchanged and PR #2 remains unmerged. Uncached map retry, TalkBack, performance and native fault injection remain untested.
 
 Open a PR with actual commands/results, tested scope and remaining limits. Do not merge without owner approval. Use genuine commits/timestamps and disclose material AI assistance. Preserve [migration provenance](MIGRATION.md).
 
