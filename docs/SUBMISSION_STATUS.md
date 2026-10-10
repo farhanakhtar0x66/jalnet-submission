@@ -1,10 +1,27 @@
 # JalNet submission acceptance
 
-Updated 2026-10-09, Asia/Kolkata. Submission: [jalnet-submission](https://github.com/farhanakhtar0x66/jalnet-submission). Original [source repository](https://github.com/farhanakhtar0x66/jalnet), feature/UI branches and unmerged PR #1 remain preserved. Import commits restore existing work; they are not claims of fresh feature development.
+Updated 2026-10-10, Asia/Kolkata. Submission: [jalnet-submission](https://github.com/farhanakhtar0x66/jalnet-submission). Original [source repository](https://github.com/farhanakhtar0x66/jalnet), feature/UI branches and unmerged PR #1 remain preserved. Import commits restore existing work; they are not claims of fresh feature development.
 
 The owner reported the organizer’s explicit confirmation: **“Yes, you’re eligible!”** Eligibility approval is therefore received, using owner-provided evidence. The message has not been independently audited here. This confirmation does not establish a completed device test, recorded video, submitted form, live AWS integration or P0 completion.
 
-## Current evidence
+## Android preview release — separate gate
+
+The owner authorized a standalone friend-testing prerelease. **Option B** preserves the working local Node/Cedar application and future AWS design while introducing a separate **org.jalnet.preview**, planned **v0.1.0-preview.1 / versionCode 2 / arm64-v8a**. Its target is on-device tank/theme persistence, demo Stress and public map assets; camera/GPS/report/API/routes/warnings/ledger/sign-in are unavailable in this first preview. Cedar stays on the Node server, not the phone.
+
+| Preview gate | Current evidence |
+|---|---|
+| Prior engineering baseline | **c0f229a: 212 tests / 23 suites**; existing local/native history retained |
+| Preview capability guards / regression | IN PROGRESS; new tests/results not inferred |
+| Secure signing custody | Owner approved private keystore/Keychain custody; no secret published |
+| Release build / metadata / certificate / checksum | PENDING exact artifact inspection |
+| Exact signed APK without Metro/forwarding | PENDING ARM64 native execution; development APK is separate evidence |
+| Friend / Redmi acceptance | PENDING actual physical testing and feedback |
+| GitHub prerelease / downloaded checksum | NOT VERIFIED; no release/download URL added yet |
+
+[Release record](ANDROID_RELEASE.md) · [Testing guide](ANDROID_TESTING.md) · [Release notes](../RELEASE_NOTES.md). Preview release success will not promote the live AWS, physical demo or hackathon submission gates. The engineering branch must not be merged without owner approval.
+
+## Historical submission/local engineering evidence
+
 
 | Gate | Actual status |
 |---|---|
