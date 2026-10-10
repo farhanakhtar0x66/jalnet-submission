@@ -43,6 +43,7 @@ import { api, isLocal, mobileConfig } from "./api";
 import { Button } from "./Button";
 import { cachedApi } from "./cache";
 import { WaterHub } from "./features/WaterHub";
+import { tankStore } from "./features/storage";
 import { foregroundFix } from "./location";
 import { operationGate } from "./operation";
 import { ReportFlow } from "./ReportFlow";
@@ -683,7 +684,7 @@ export function Home() {
             {sheet === "camera" ? (
               <ReportFlow close={closeSheet} onBusyChange={setReportBusy} />
             ) : sheet === "water" ? (
-              <WaterHub close={closeSheet} />
+              <WaterHub close={closeSheet} tankStore={tankStore} />
             ) : (
               <>
                 <View style={styles.sheetHeading}>
