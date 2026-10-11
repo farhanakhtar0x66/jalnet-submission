@@ -26,9 +26,21 @@ export class LocalEvidence implements EvidenceProvider {
     const grant = this.grants.get(nonce);
     if (!grant || grant.expires < Date.now() || data.length !== grant.size)
       throw new Error("Invalid or expired LOCAL/DEMO upload grant");
-    await mkdir(this.directory, { recursive: true });
-    await writeFile(join(this.directory, encodeURIComponent(grant.key)), data);
+    // Claim the one-use capability before yielding to filesystem work. Parallel
+    // HTTP redemptions must not both pass validation and overwrite evidence.
     this.grants.delete(nonce);
+    try {
+      await mkdir(this.directory, { recursive: true });
+      await writeFile(
+        join(this.directory, encodeURIComponent(grant.key)),
+        data,
+      );
+    } catch (error) {
+      // A failed write is retryable while this same grant is still valid.
+      if (grant.expires >= Date.now() && !this.grants.has(nonce))
+        this.grants.set(nonce, grant);
+      throw error;
+    }
   }
   async read(key: string) {
     return new Uint8Array(
