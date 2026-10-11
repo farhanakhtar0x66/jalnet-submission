@@ -1,8 +1,36 @@
-# Build It feature audit and execution plan
+# JalNet feature status
+
+Updated 2026-10-10. Preview source **952bfde passes 229 tests / 25 suites**, preserving the prior **c0f229a: 212 tests / 23 suites**. [Same-source CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032876398) and [PR CI](https://github.com/farhanakhtar0x66/jalnet-submission/actions/runs/38032902452) completed SUCCESS. Existing [local/native evidence](FINAL_ENGINEERING_REPORT.md) and [migration provenance](../MIGRATION.md) remain historical; new artifact/runtime/publication gates are recorded separately.
+
+## Standalone preview versus working local application
+
+**Option B is selected: separate Android preview, org.jalnet.preview, v0.1.0-preview.1/versionCode 2, ARM64-only.** Composition/configuration regressions and the signed artifact inspection **PASS**. The exact signed APK passes 28 bounded native emulator cases; [public prerelease](https://github.com/farhanakhtar0x66/jalnet-submission/releases/tag/v0.1.0-preview.1) and anonymous downloaded-checksum verification **PASS**. Physical acceptance remains **PENDING**. [Actual cases/untested limits](ANDROID_PREVIEW_ACCEPTANCE.md), [nine release captures](ui/android-preview-v0.1.0/README.md). [Release gate](ANDROID_RELEASE.md), [friend testing](ANDROID_TESTING.md).
+
+| Feature | On-device preview target | Existing local Node/development evidence |
+|---|---|---|
+| Public street map / credits | Exact-APK Light/Dark streets, pan retention and native credits PASS; internet required; uncached offline/Retry untested | Scoped Light/Dark MapLibre assets/attribution actually inspected |
+| Appearance | Actual Light/Dark persistence/cold restart and System following OS Dark/Light PASS | Actual native selection/cold restarts retained |
+| My Water | Exact-APK valid/invalid/zero-use/save/restart/reset/simulation/offline PASS; blank field/rapid taps/native storage fault untested | Actual arithmetic/native reset/edit/restart tests; assumptions, no sensors |
+| Water Stress | Exact-APK default/invalid/missing 55% / exact 60%/renormalized weights/offline cases PASS; fictional DEMO INDICATOR | Actual weights/coverage/missing/invalid/native cases retained; no environmental feed |
+| TankerOS / HeatSafe | Display-only fictional DEMO / PLANNED | No booking, payments, supplier contact, heat measurement or heat-aware routing |
+| Camera / foreground location | Unavailable in this first standalone preview | Earlier scoped physical staged camera and broader emulator recovery evidence; physical permission/GPS matrix incomplete |
+| Private report / confirmation / incidents | Unavailable without the backend; no fake response | Actual local HTTP/manual confirmation/UNVERIFIED incident/fusion/freshness |
+| Saved routes / warnings / droplets | Unavailable without the backend | Real intersection over straight-line fixtures and provisional idempotent ledger; no road navigation/safety guarantee |
+| Cedar | Not running in the preview phone | Mandatory genuine Node/WASM decisions for private-report operations; real owner/foreign/forbid/fail-closed HTTP proof |
+| AWS cloud / Cedar Lambda | Unavailable/live unverified | Providers, resources and guards preserved; BLOCKED_AWAITING_SSO |
+
+Artifact tag/source stays 952bfde; later evidence-document commits may differ. Main 57a4da6 remains unchanged; PR #2 is unmerged pending final-doc CI/owner review. The separate package preserves the development app's private data without automatic migration. No secure public connected trial exists; the fixed-identity loopback API must not be exposed. Preview calculators/theme are on-device; map requests still go to public external asset providers. Do not call this wholly offline or production-ready.
+
+Organizer eligibility approval is already recorded from the owner's message; no new clarification is awaited. Five measured physical rehearsals, final hackathon video and form receipt remain separate pending tasks. No live AWS or JalNet P0 completion is declared.
+
+## Historical Build It feature audit and milestones
+
+The following retains earlier scope, test totals and observations at their original milestones. Earlier “pending” rows describe that historical test boundary; current release acceptance is the matrix above.
+
 
 Initial audit: 2026-10-08, Asia/Kolkata, starting at 087a225 with existing acceptance-document drafts retained. The owner's Build It strategy authorized the narrow secondary features below, superseding the earlier feature freeze for that scope. Cedar stays frozen at 9422fc2. The historical engineering branch was `codex/build-it-features`, with visuals initially assigned to Aryan. On 2026-10-09 the owner reassigned the complete UI/theme redesign to Codex on `ui/jalnet-redesign`, starting from `2dbbc4f`; testing/product choices/recording/submission remain with the owner. The phone battery died before the requested MW-03 close/reopen check, so new-screen physical acceptance remains pending.
 
-The [official overview](https://www.wemakedevs.org/aws/env) was reread on 2026-10-08: it supports local AWS open-source use, explicitly lists Cedar, and needs no AWS account for Build It. The [rules](https://www.wemakedevs.org/aws/env/rules) still impose opening-time/original-work, team, participation and submission requirements. This supports the chosen technical path, not a claim of overall eligibility. Preserve all Git dates/history; organizer clarification remains pending. AWS SSO is not a primary-submission dependency; cloud acceptance stays BLOCKED_AWAITING_SSO.
+The [official overview](https://www.wemakedevs.org/aws/env) was reread on 2026-10-08: it supports local AWS open-source use, explicitly lists Cedar, and needs no AWS account for Build It. The [rules](https://www.wemakedevs.org/aws/env/rules) still impose opening-time/original-work, team, participation and submission requirements. This supports the chosen technical path, not a claim of overall eligibility. Preserve all Git dates/history; organizer clarification was pending at this audit; the owner subsequently reported approval (“Yes, you’re eligible!”) on 2026-10-09. AWS SSO is not a primary-submission dependency; cloud acceptance stays BLOCKED_AWAITING_SSO.
 
 ## Historical feature-increment execution plan
 
@@ -56,9 +84,9 @@ The [seven before-design UI references](ui/README.md) and [implementation report
 
 Historical feature-increment local gate: **15 suites / 165 tests**, preserving 111 core tests plus 54 additions (27 tank, 11 persistence, 16 Stress/demo contract). Format/lint/types/synth/Android export and `pnpm smoke:local --isolated` passed after the native input-format fix. Actual earlier emulator reset and 55%/35% simulation retests passed; native SQLite restart and Stress missing-data evidence remain separate from Redmi acceptance. Seven inspected synthetic before-design references were delivered. See [actual report](IMPLEMENTATION_REPORT.md). No final recording/submission or cloud verification occurred.
 
-## Current UI/theme increment
+## Historical UI/theme increment — 8ea3ca7
 
-The final current-source gate after native polish **passed all eight local checks**: format/lint/types/synth, **181 tests across 16 suites**, Android export, real Cedar check and isolated local smoke. All 165 baseline tests are preserved, with 16 theme tests added. The replacement arm64 debug APK actually built, installed with `-r` and launched on the owned API37 emulator. The charged Redmi still needs the compatible replacement installed in place; wanted tank/draft/cache/appearance state must be preserved. See the [after-design screenshot pack](ui/redesign/README.md).
+At the UI milestone, the current-source gate after native polish **passed all eight local checks**: format/lint/types/synth, **181 tests across 16 suites**, Android export, real Cedar check and isolated local smoke. All 165 baseline tests are preserved, with 16 theme tests added. The replacement arm64 debug APK actually built, installed with `-r` and launched on the owned API37 emulator. The charged Redmi still needs the compatible replacement installed in place; wanted tank/draft/cache/appearance state must be preserved. See the [after-design screenshot pack](ui/redesign/README.md).
 
 | Current presentation / native observation | Actual evidence and acceptance limit |
 |---|---|

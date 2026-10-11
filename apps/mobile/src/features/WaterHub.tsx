@@ -1,3 +1,4 @@
+import type { TankState } from "@jalnet/contracts/water";
 import { useState } from "react";
 import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import { Button } from "../Button";
@@ -5,8 +6,9 @@ import { AppText, PageScroll, ScreenHeader } from "../design";
 import { Icon } from "../Icon";
 import { useTheme } from "../theme/ThemeProvider";
 import { MyWater } from "./MyWater";
-import { WaterStress } from "./WaterStress";
+import type { LocalFeatureStore } from "./useLocalFeature";
 import { VisionPreview } from "./VisionPreview";
+import { WaterStress } from "./WaterStress";
 
 const tabs = [
   { id: "tank", label: "My Water", icon: "tank" },
@@ -14,7 +16,13 @@ const tabs = [
   { id: "vision", label: "Vision", icon: "truck" },
 ] as const;
 
-export function WaterHub({ close }: { close: () => void }) {
+export function WaterHub({
+  close,
+  tankStore,
+}: {
+  close: () => void;
+  tankStore: LocalFeatureStore<TankState>;
+}) {
   const { colors } = useTheme();
   const { width, fontScale } = useWindowDimensions();
   const compactTabs = width < 360 || fontScale > 1.25;
@@ -76,7 +84,7 @@ export function WaterHub({ close }: { close: () => void }) {
         })}
       </View>
       {screen === "tank" ? (
-        <MyWater />
+        <MyWater store={tankStore} />
       ) : screen === "stress" ? (
         <WaterStress />
       ) : (

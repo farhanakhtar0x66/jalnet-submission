@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FeatureStateError } from "./persistence";
 
-interface Store<T> {
+export interface LocalFeatureStore<T> {
   load(): Promise<{ value: T; persisted: boolean; scope: string }>;
   save(value: T, expectedScope: string): Promise<void>;
   reset(): Promise<{ value: T; scope: string }>;
@@ -12,7 +12,7 @@ function message(error: unknown) {
     : "Local storage unavailable. Retry; your existing saved data was not reset.";
 }
 
-export function useLocalFeature<T>(store: Store<T>) {
+export function useLocalFeature<T>(store: LocalFeatureStore<T>) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
